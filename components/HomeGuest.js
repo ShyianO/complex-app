@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import Page from "./Page";
+import Axios from "axios";
 
 function HomeGuest() {
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await Axios.post("/register", {
+        username,
+        email,
+        password,
+      });
+      console.log("Success");
+    } catch (e) {
+      console.log("Error");
+    }
+  }
+
   return (
-    <div className="container py-md-5">
+    <Page title="Welcome">
       <div className="row align-items-center">
         <div className="col-lg-7 py-3 py-md-5">
           <h1 className="display-3">Remember Writing?</h1>
@@ -14,12 +33,13 @@ function HomeGuest() {
           </p>
         </div>
         <div className="col-lg-5 pl-lg-5 pb-3 py-lg-5">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username-register" className="text-muted mb-1">
                 <small>Username</small>
               </label>
               <input
+                onChange={(e) => setUsername(e.target.value)}
                 id="username-register"
                 name="username"
                 className="form-control"
@@ -33,6 +53,7 @@ function HomeGuest() {
                 <small>Email</small>
               </label>
               <input
+                onChange={(e) => setEmail(e.target.value)}
                 id="email-register"
                 name="email"
                 className="form-control"
@@ -46,6 +67,7 @@ function HomeGuest() {
                 <small>Password</small>
               </label>
               <input
+                onChange={(e) => setPassword(e.target.value)}
                 id="password-register"
                 name="password"
                 className="form-control"
@@ -62,7 +84,7 @@ function HomeGuest() {
           </form>
         </div>
       </div>
-    </div>
+    </Page>
   );
 }
 
