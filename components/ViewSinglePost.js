@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Page from "./Page";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingDotsIcon from "./LoadingDotsIcon";
 import ReactMarkdown from "react-markdown";
 import ReactTooltip from "react-tooltip";
 import NotFound from "./NotFound";
+import StateContext from "../app/StateContext";
+import DispatchContext from "../app/DispatchContext";
 
 function ViewSinglePost() {
+  const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState();
+  const [deleteAttemptCount, setDeleteAttemptCount] = useState(0);
+  const [deleteWasSuccessful, setDeleteWasSuccessful] = useState(false);
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source();
@@ -32,6 +38,41 @@ function ViewSinglePost() {
     };
   }, []);
 
+  useEffect(() => {
+    if (deleteAttemptCount) {
+      const ourRequest = Axios.CancelToken.source();
+
+      async function deletePost() {
+        try {
+          const response = await Axios.delete(
+            `/post/${id}`,
+            { data: { token: appState.user.token } },
+            {
+              cancelToken: ourRequest.token,
+            }
+          );
+          if (response.data == "Success") {
+            setDeleteWasSuccessful(true);
+          }
+        } catch (e) {
+          console.log("delete problems");
+        }
+      }
+      deletePost();
+      return () => {
+        ourRequest.cancel();
+      };
+    }
+  }, [deleteAttemptCount]);
+
+  if (deleteWasSuccessful) {
+    appDispatch({
+      type: "flashMessage",
+      value: "Post was successfully deleted.",
+    });
+    return <Redirect to={`/profile/${appState.user.username}`} />;
+  }
+
   if (!isLoading && !post) {
     return <NotFound />;
   }
@@ -48,29 +89,48 @@ function ViewSinglePost() {
     date.getMonth() + 1
   }/${date.getFullYear()}`;
 
+  function isOwner() {
+    if (appState.loggedIn) {
+      return appState.user.username == post.author.username;
+    }
+    return false;
+  }
+
+  function deleteHandler() {
+    const areYouSure = window.confirm(
+      "Do you really want to delete this post?"
+    );
+    if (areYouSure) {
+      setDeleteAttemptCount((prev) => prev + 1);
+    }
+  }
+
   return (
     <Page title={post.title}>
       <div className="d-flex justify-content-between">
         <h2>{post.title}</h2>
-        <span className="pt-2">
-          <Link
-            to={`/post/${post._id}/edit`}
-            data-tip="Edit"
-            data-for="edit"
-            className="text-primary mr-2"
-          >
-            <i className="fas fa-edit"></i>
-          </Link>
-          <ReactTooltip id="edit" className="custom-tooltip" />{" "}
-          <Link
-            data-tip="Delete"
-            data-for="delete"
-            className="delete-post-button text-danger"
-          >
-            <i className="fas fa-trash"></i>
-          </Link>
-          <ReactTooltip id="delete" className="custom-tooltip" />
-        </span>
+        {isOwner() && (
+          <span className="pt-2">
+            <Link
+              to={`/post/${post._id}/edit`}
+              data-tip="Edit"
+              data-for="edit"
+              className="text-primary mr-2"
+            >
+              <i className="fas fa-edit"></i>
+            </Link>
+            <ReactTooltip id="edit" className="custom-tooltip" />{" "}
+            <a
+              onClick={deleteHandler}
+              data-tip="Delete"
+              data-for="delete"
+              className="delete-post-button text-danger"
+            >
+              <i className="fas fa-trash"></i>
+            </a>
+            <ReactTooltip id="delete" className="custom-tooltip" />
+          </span>
+        )}
       </div>
 
       <p className="text-muted small mb-4">

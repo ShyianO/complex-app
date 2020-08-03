@@ -19,6 +19,7 @@ import DispatchContext from "./DispatchContext";
 import Profile from "../components/Profile";
 import EditPost from "../components/EditPost";
 import NotFound from "../components/NotFound";
+import Search from "../components/Search";
 
 Axios.defaults.baseURL = "http://localhost:8080";
 //
@@ -31,6 +32,7 @@ function Main() {
       username: localStorage.getItem("appUsername"),
       avatar: localStorage.getItem("appAvatar"),
     },
+    isSearchOpen: false,
   };
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -43,6 +45,12 @@ function Main() {
         return;
       case "flashMessage":
         draft.flashMessages.push(action.value);
+        return;
+      case "openSearch":
+        draft.isSearchOpen = true;
+        return;
+      case "closeSearch":
+        draft.isSearchOpen = false;
         return;
     }
   }
@@ -92,6 +100,7 @@ function Main() {
               <NotFound />
             </Route>
           </Switch>
+          {state.isSearchOpen ? <Search /> : ""}
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>
