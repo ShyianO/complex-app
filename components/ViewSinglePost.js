@@ -36,7 +36,7 @@ function ViewSinglePost() {
     return () => {
       ourRequest.cancel();
     };
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (deleteAttemptCount) {
