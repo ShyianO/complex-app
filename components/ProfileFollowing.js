@@ -23,24 +23,22 @@ function ProfileFollowing() {
 
   if (isLoading) return <LoadingDotsIcon />;
 
-  if (following) {
-    return (
-      <div className="list-group">
-        {posts.map((follower, index) => {
-          return (
-            <Link
-              key={index}
-              to={`/profile/${follower.username}`}
-              className="list-group-item list-group-item-action"
-            >
-              <img className="avatar-tiny" src={follower.avatar} />{" "}
-              {follower.username}
-            </Link>
-          );
-        })}
-      </div>
-    );
-  }
+  return (
+    <div className="list-group">
+      {posts.map((follower, index) => {
+        return (
+          <Link
+            key={index}
+            to={`/profile/${follower.username}`}
+            className="list-group-item list-group-item-action"
+          >
+            <img className="avatar-tiny" src={follower.avatar} />{" "}
+            {follower.username}
+          </Link>
+        );
+      })}
+    </div>
+  );
 }
 
 export default ProfileFollowing;
