@@ -1,16 +1,18 @@
 import React, { useEffect, useContext } from "react";
-import Page from "./Page";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
-import Axios from "axios";
-import StateContext from "../app/StateContext";
-import ProfilePosts from "./ProfilePosts";
 import { useImmer } from "use-immer";
+import Axios from "axios";
+
+import StateContext from "../StateContext";
+import Page from "./Page";
 import ProfileFollowers from "./ProfileFollowers";
 import ProfileFollowing from "./ProfileFollowing";
+import ProfilePosts from "./ProfilePosts";
 
 function Profile() {
   const { username } = useParams();
   const appState = useContext(StateContext);
+
   const [state, setState] = useImmer({
     followActionLoading: false,
     startFollowingRequestCount: 0,
@@ -150,7 +152,6 @@ function Profile() {
             </button>
           )}
       </h2>
-
       <div className="profile-nav nav nav-tabs pt-2 mb-4">
         <NavLink
           exact

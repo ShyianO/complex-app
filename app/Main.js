@@ -4,27 +4,26 @@ import { useImmerReducer } from "use-immer";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import Axios from "axios";
+Axios.defaults.baseURL = process.env.BACKENDURL || "";
 
 //  My components
-import LoadingDotsIcon from "../components/LoadingDotsIcon";
-import Header from "../components/Header";
-import HomeGuest from "../components/HomeGuest";
-import Footer from "../components/Footer";
-import About from "../components/About";
-import Terms from "../components/Terms";
-import Home from "../components/Home";
-const CreatePost = React.lazy(() => import("../components/CreatePost"));
-const ViewSinglePost = React.lazy(() => import("../components/ViewSinglePost"));
-const Search = React.lazy(() => import("../components/Search"));
-const Chat = React.lazy(() => import("../components/Chat"));
-import FlashMessages from "../components/FlashMessages";
-import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
-import Profile from "../components/Profile";
-import EditPost from "../components/EditPost";
-import NotFound from "../components/NotFound";
-
-Axios.defaults.baseURL = "http://localhost:8080";
+import StateContext from "./StateContext";
+import About from "./components/About";
+import EditPost from "./components/EditPost";
+import FlashMessages from "./components/FlashMessages";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import HomeGuest from "./components/HomeGuest";
+import LoadingDotsIcon from "./components/LoadingDotsIcon";
+import NotFound from "./components/NotFound";
+import Profile from "./components/Profile";
+import Terms from "./components/Terms";
+const CreatePost = React.lazy(() => import("./components/CreatePost"));
+const ViewSinglePost = React.lazy(() => import("./components/ViewSinglePost"));
+const Search = React.lazy(() => import("./components/Search"));
+const Chat = React.lazy(() => import("./components/Chat"));
 
 function Main() {
   const initialState = {

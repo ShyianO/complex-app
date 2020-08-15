@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
+
 import Page from "./Page";
 
-function About() {
+function Terms() {
   return (
-    <Page title="About Us">
-      <h2>About Us</h2>
+    <Page title="Terms and Conditions">
+      <h2>Our Terms & Conditions</h2>
       <p className="lead text-muted">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
         dolorum labore quisquam vel id dicta fuga! Ducimus, quo. Dolore commodi
@@ -29,4 +30,4 @@ function About() {
   );
 }
 
-export default About;
+export default Terms;

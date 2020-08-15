@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Axios from "axios";
-import DispatchContext from "../app/DispatchContext";
 
-function HeaderLoggedOut(props) {
+import DispatchContext from "../DispatchContext";
+
+function HeaderLoggedOut() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+
   const appDispatch = useContext(DispatchContext);
 
   async function handleSubmit(e) {
@@ -30,6 +32,7 @@ function HeaderLoggedOut(props) {
       console.log("Logging error");
     }
   }
+
   return (
     <form onSubmit={handleSubmit} className="mb-0 pt-2 pt-md-0">
       <div className="row align-items-center">

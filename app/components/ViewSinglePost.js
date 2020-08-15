@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import Page from "./Page";
 import { useParams, Link, Redirect } from "react-router-dom";
-import Axios from "axios";
-import LoadingDotsIcon from "./LoadingDotsIcon";
 import ReactMarkdown from "react-markdown";
 import ReactTooltip from "react-tooltip";
+import Axios from "axios";
+
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
+import LoadingDotsIcon from "./LoadingDotsIcon";
 import NotFound from "./NotFound";
-import StateContext from "../app/StateContext";
-import DispatchContext from "../app/DispatchContext";
+import Page from "./Page";
 
 function ViewSinglePost() {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
+
   const { id } = useParams();
+
   const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState();
   const [deleteAttemptCount, setDeleteAttemptCount] = useState(0);
@@ -132,7 +135,6 @@ function ViewSinglePost() {
           </span>
         )}
       </div>
-
       <p className="text-muted small mb-4">
         <Link to={`/profile/${post.author.username}`}>
           <img className="avatar-tiny" src={post.author.avatar} />
@@ -143,7 +145,6 @@ function ViewSinglePost() {
         </Link>{" "}
         on {dateFormatted}
       </p>
-
       <div className="body-content">
         <ReactMarkdown
           source={post.body}

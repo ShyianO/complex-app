@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import Page from "./Page";
-import Axios from "axios";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import DispatchContext from "../app/DispatchContext";
-import StateContext from "../app/StateContext";
+import Axios from "axios";
 
-function CreatePost(props) {
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
+import Page from "./Page";
+
+function CreatePost() {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   const [wasSuccessful, setWasSuccessful] = useState(false);
@@ -50,7 +51,6 @@ function CreatePost(props) {
             autoComplete="off"
           />
         </div>
-
         <div className="form-group">
           <label htmlFor="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
@@ -63,7 +63,6 @@ function CreatePost(props) {
             type="text"
           ></textarea>
         </div>
-
         <button className="btn btn-primary">Save New Post</button>
       </form>
     </Page>

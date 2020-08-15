@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import Page from "./Page";
+import React, { useEffect, useContext } from "react";
 import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import { CSSTransition } from "react-transition-group";
-import DispatchContext from "../app/DispatchContext";
+
+import DispatchContext from "../DispatchContext";
+import Page from "./Page";
 
 function HomeGuest() {
   const appDispatch = useContext(DispatchContext);

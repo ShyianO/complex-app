@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useImmerReducer } from "use-immer";
-import Page from "./Page";
 import { useParams, Link, Redirect } from "react-router-dom";
 import Axios from "axios";
+
+import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 import LoadingDotsIcon from "./LoadingDotsIcon";
-import StateContext from "../app/StateContext";
-import DispatchContext from "../app/DispatchContext";
 import NotFound from "./NotFound";
+import Page from "./Page";
 
 function ViewSinglePost() {
   const appState = useContext(StateContext);
@@ -164,7 +165,6 @@ function ViewSinglePost() {
       <Link className="small font-weight-bold" to={`/post/${state.id}`}>
         &laquo; Back to post permalink
       </Link>
-
       <form className="mt-3" onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="post-title" className="text-muted mb-1">
@@ -192,7 +192,6 @@ function ViewSinglePost() {
             </div>
           )}
         </div>
-
         <div className="form-group">
           <label htmlFor="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
@@ -216,7 +215,6 @@ function ViewSinglePost() {
             </div>
           )}
         </div>
-
         <button className="btn btn-primary" disabled={state.isSaving}>
           Save Updates
         </button>

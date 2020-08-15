@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import DispatchContext from "../app/DispatchContext";
 import { useImmer } from "use-immer";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+
+import DispatchContext from "../DispatchContext";
 import Post from "./Post";
 
 function Search() {
@@ -17,7 +17,6 @@ function Search() {
 
   useEffect(() => {
     document.addEventListener("keyup", searchKeyPressHandler);
-
     return () => document.removeEventListener("keyup", searchKeyPressHandler);
   }, []);
 
@@ -99,7 +98,6 @@ function Search() {
           </span>
         </div>
       </div>
-
       <div className="search-overlay-bottom">
         <div className="container container--narrow py-3">
           <div
