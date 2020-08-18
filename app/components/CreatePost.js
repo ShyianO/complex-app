@@ -21,7 +21,6 @@ function CreatePost() {
         body,
         token: appState.user.token,
       });
-      console.log("success");
       setWasSuccessful(response.data);
     } catch (e) {
       console.log("create post error");
